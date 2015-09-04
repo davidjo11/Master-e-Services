@@ -30,6 +30,7 @@ bg2 = createStyleElement("div",
         "margin", "auto",
         "backgroundColor", "white",
         "width", "50%",
+        "color", "black",
         "height", "50%",
         "position", "relative"
     );
@@ -41,14 +42,21 @@ button1 = createStyleElement("button",
         "height", "20px",
         "width", "20px",
         "bottom", "5%",
+        "color", "black",
+        "text-align", "center",
         "right", "5%",
         "border-radius", "50px"
     );
 
-button1.html = "Ok";
+button1.innerText = "Ok";
 
 bg2.appendChild(button1);
 
 bg.appendChild(bg2);
+
+bg2.addEventListener("click", {handleEvent : function (event){ event.stopPropagation()}}, false);
+//Fils aux parents => propagation stoppée, autrement quand tu cliques sur le fond bg2 tous se barre.
+
+bg.addEventListener("click", { handleEvent : function (){ document.getElementsByTagName("body")[0].removeChild(bg); } }, false);
 
 document.getElementsByTagName("body")[0].appendChild(bg);
