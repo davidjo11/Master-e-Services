@@ -3,7 +3,7 @@
  */
 ecriteurTableau = {
     ecrire : function (tableauValeursClasses, classeCssTableau){
-        document.write("<table class=\""+ classeCssTableau +"\">");
+        this.ecrireDebutBalise("table", "multiplication");
         for(i in tableauValeursClasses){
             var aux = tableauValeursClasses[i];
             this.ecrireDebutBalise("tr","");
@@ -13,7 +13,7 @@ ecriteurTableau = {
             this.ecrireFinBalise("tr");
         }
 
-        document.write("</table>");
+        this.ecrireFinBalise("table");
     },
     ecrireDebutBalise : function (nomBalise, classeCss){
         document.write("<" + nomBalise + " class=\""+ classeCss +"\">");
