@@ -1,5 +1,11 @@
-.metadata
+.*
+!/.travis.yml
 .recommenders
 bin/
-.*
 !/.gitignore
+.idea/*
+*.[oa]
+.metadata/
+.project
+.sublime*
+*.log
