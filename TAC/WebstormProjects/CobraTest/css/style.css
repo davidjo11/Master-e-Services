@@ -1,0 +1,42 @@
+@font-face {
+  font-family: 'CoolveticaRg-Regular';
+  src: url('../fonts/CoolveticaRg-Regular.eot') format('eot'),
+       url('../fonts/CoolveticaRg-Regular.woff') format('woff'),
+       url('../fonts/CoolveticaRg-Regular.svg') format('svg'),
+       url('../fonts/CoolveticaRg-Regular.ttf') format('truetype');
+}
+
+@-webkit-keyframes connectionTranslateY {
+  from {top:1500px; opacity: -2;}
+  to {top: 50%; opacity: 1;}
+}
+
+@keyframes connectionTranslateY {
+  from {top:1500px; opacity: -2;}
+  to {top: 50%; opacity: 1;}
+}
+
+loader {
+  &::before, &::after {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: $color-loader;
+    position: absolute;
+    animation: load .7s infinite alternate ease-in-out;
+  }
+  &::before {
+    top: 0;
+  }
+
+  &::after {
+    bottom: 0;
+  }
+}
+
+@keyframes load {
+  0% { left: 0; height: 30px; width: 15px }
+  50% { height: 8px; width: 40px }
+  100% { left: 235px; height: 30px; width: 15px}
+}
