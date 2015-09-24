@@ -1,5 +1,5 @@
 function UserManager(){
-  this.usersList = null;
+  this.usersList = new Array();
 }
 
 UserManager.prototype = {

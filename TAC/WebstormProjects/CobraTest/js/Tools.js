@@ -43,7 +43,7 @@ Tools = {
     document.addEventListener("click", function (){
       var target = event.getTarget();
       if(target.id == "ValiderConnexion"){
-        this.body.style.transition = "background-color 2s";
+        
       }
     }, false);
   }

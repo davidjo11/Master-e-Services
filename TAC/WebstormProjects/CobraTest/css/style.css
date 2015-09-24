@@ -16,6 +16,16 @@
   to {top: 50%; opacity: 1;}
 }
 
+@-webkit-keyframes changeBodyBgColor{
+  from {background-color: white;}
+  to {background-color: #ce4433;}
+}
+
+@keyframes changeBodyBgColor {
+  from {background-color: white;}
+  to {background-color: #ce4433;}
+}
+
 loader {
   &::before, &::after {
     content: "";

@@ -1,13 +1,20 @@
 //Lancer les traitements après le chargement de la page de sorte à pouvoir
 // récupérer le body (faire onload() sur body).
-function go(){
-  var initialize = new InitializeBundle();
-  initialize.initialize();
+function start(){
+  
+}
+
+
+letsStart = {
+  go : function go(){
+    this.initializeObject = new InitializeBundle();
+    this.initializeObject.initialize();
+    this.userManager = new UserManager();
 }
 
 function InitializeBundle(){
   this._connection = new ConnectionBundle();
-  this.body = this._getBody();
+  this.body = Tools._getBody();
   this.divLoader = null;
   this.divConnection = null;
   this.divMenu = null;
@@ -41,20 +48,20 @@ InitializeBundle.prototype = {
       "animation-iteration-count", "1",
       "-webkit-animation-fill-mode", "forwards",
       "animation-fill-mode", "forwards");
-    this._assignAttributes(this.divConnection,
+    Tools._assignAttributes(this.divConnection,
       "class", "connection");
-    this._ajouterTexte(this.divConnection, "Entrez votre pseudo:");
+    Tools._ajouterTexte(this.divConnection, "Entrez votre pseudo:");
 
     var input = Tools._createStyledElement("input",
       "margin-top", "15px",
       "margin-bottom", "5px",
       "font-size", "22px");
-    this._assignAttributes(input,
+    Tools._assignAttributes(input,
       "type", "text",
       "placeholder", "Your pseudo",
       "required", "",
       "autofocus", "");
-    this._ajouterBalise(this.divConnection, input);
+    Tools._ajouterBalise(this.divConnection, input);
 
     var button = Tools._createStyledElement("button",
       "color", "white",
@@ -69,19 +76,19 @@ InitializeBundle.prototype = {
       "-moz-border-radius", "22px 5px 22px 5px",
       "-webkit-border-radius", "22px 5px 22px 5px",
       "border-radius", "22px");
-    this._assignAttributes(button,
+    Tools._assignAttributes(button,
       "id", "ValiderConnexion",
       "type", "button");
-    this._ajouterTexte(button, "Valider");
-    this._ajouterBalise(this.divConnection, button);
+    Tools._ajouterTexte(button, "Valider");
+    Tools._ajouterBalise(this.divConnection, button);
 
     var body = Tools._getBody();
     body.style.fontFamily = 'CoolveticaRg-Regular';
 
-    this._ajouterBalise(this._getBody(), this.divConnection);
+    this._ajouterBalise(Tools._getBody(), this.divConnection);
 
     /*Partie loader*/
-    this.divLoader = this._createStyledElement("div",
+    this.divLoader = Tools._createStyledElement("div",
       "width", "250px",
       "height", "50px",
       "line-height", "50px",
@@ -94,7 +101,7 @@ InitializeBundle.prototype = {
       "font-weight", "900",
       "color", "#ce4233",
       "letter-spacing", "0.2em");
-    this._assignAttributes(this.divLoader,
+    Tools._assignAttributes(this.divLoader,
       "class", "loader",
       "display", "none");
   }
