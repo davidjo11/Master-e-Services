@@ -12,7 +12,7 @@ UserManager.prototype = {
       this.usersList.push(user);
       return new User(user);
     }
-    else return null;
+    else return undefined;
   },
 
   _removeUser : function (user){

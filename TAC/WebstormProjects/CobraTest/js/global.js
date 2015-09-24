@@ -1,29 +1,24 @@
 //Lancer les traitements après le chargement de la page de sorte à pouvoir
 // récupérer le body (faire onload() sur body).
+page = new PageBundle();
+userMan = new UserManager();
+
 function start(){
-  
+  page.initialize();
+  page.renderConnection();
 }
 
-
-letsStart = {
-  go : function go(){
-    this.initializeObject = new InitializeBundle();
-    this.initializeObject.initialize();
-    this.userManager = new UserManager();
-}
-
-function InitializeBundle(){
-  this._connection = new ConnectionBundle();
+function PageBundle(){
   this.body = Tools._getBody();
-  this.divLoader = null;
-  this.divConnection = null;
-  this.divMenu = null;
-  this.divContent = null;
+  this.divLoader = undefined;
+  this.divConnection = undefined;
+  this.divMenu = undefined;
+  this.divContent = undefined;
 }
 
-InitializeBundle.prototype = {
+PageBundle.prototype = {
 
-  initialize : function (){
+  initializeElements : function (){
 
     /* Partie connexion*/
     this.divConnection = Tools._createStyledElement("div",
@@ -104,5 +99,10 @@ InitializeBundle.prototype = {
     Tools._assignAttributes(this.divLoader,
       "class", "loader",
       "display", "none");
+  },
+
+  renderConnection : function (){
+    this.body.style.backgroundColor = "#ce4433";
+    this.divConnection.style.display = "flex";
   }
 };
