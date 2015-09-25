@@ -17,3 +17,4 @@ M*.txt
 *.tar
 *.tar.gz
 *.jar
+node_modules/
