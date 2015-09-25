@@ -8,17 +8,20 @@
     <script src="js/socket.io.js"></script>
     <script src="js/cobra.js"></script>
 
+    <script src="js/global.js" type="text/javascript"></script>
+    <script src="js/Start.js" type="text/javascript"></script>
+
     <script>
         var cobra = new Cobra();
         var room = "test";
         var socketId;
         var apiUrl = 'http://cobra-framework.com:3000/api/events/' + room;
         cobra.connect('http://cobra-framework.com:8080');
-        
+
         cobra.connectionCallback = function () {
             cobra.joinRoom(room);
         }
-    
+
         cobra.joinRoomCallback = function (roomName) {
            // appel à l'API pour récupérer tous les messages de la room roomName
            $.ajax({
@@ -39,10 +42,10 @@
                      // recuperer les infos contenues dans les messages
                      console.log(content);
                   }
-                  
+
                   // Pour envoyer un message dans toute la room
                   cobra.sendMessage({content : "test"}, room, true);
-                  
+
                   // Pour envoyer un message dans toute la room excepté soi
                   // cobra.sendMessage({content : "test"}, room, false);
               }
@@ -56,7 +59,7 @@
                 {
                     // Contient l'id du client
                     var client = message.clients[i];
-                    
+
                 }
                 // Mon id attribué par la room
                 socketId = message.socketId;
@@ -66,11 +69,11 @@
                console.log(message.message);
            }
         }
-    
+
         cobra.clientJoinedRoomCallback = function(data){
             // Un autre client a rejoint la room
         }
-    
+
         cobra.clientLeftRoomCallback = function(data){
             // Un client a quitté la room
         }
@@ -78,7 +81,7 @@
 
     </script>
 </head>
-<body>
+<body onload="start();">
 
 </body>
 </html>
