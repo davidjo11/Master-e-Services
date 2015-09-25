@@ -13,3 +13,7 @@ JavaScript-Project/
 fonts/
 formation-angularjs
 M*.txt
+*.zip
+*.tar
+*.tar.gz
+*.jar
