@@ -15,17 +15,17 @@ public class Ex1 {
 	public Relation createRelation(String name){
 		return new Relation(name);
 	}
-	
+
 	public double getDistanceJacquard(int[] t1, int[] t2){
-		double union = 0, inter = 0, res = 0;
+		double union = 0, inter = 0, Mut2 = 0;
 		for(int i=0; i<t1.length;i++){
 			if(t1[i] == t2[i] && t1[i] == 1)
 				inter++;
 			if(t1[i] == 1 || t2[i] == 1)
 				union++;
 		}
-		res = new Double(1.0-(inter/union));
-		return Math.floor(res*100)/100;
+		Mut2 = new Double(1.0-(inter/union));
+		return Math.floor(Mut2*100)/100;
 	}
 
 	private class Relation{
@@ -67,20 +67,20 @@ public class Ex1 {
 		List<String> listName = new ArrayList<String>();
 		List<Relation> lp = new ArrayList<Relation>();
 
-		PrintWriter names = null, themes = null, res = null, Mut2_binaire = null, Mtt = null, Mtt_binaire = null, MutR = null;
+		PrintWriter Readme = null, names = null, themes = null, Mut2 = null, Mut2_binaire = null, Mtt = null, Mtt_binaire = null, MutR = null;
 		Iterator<Relation> it;
 		Iterator<String> itt;
-		int nbUsagers = 0, nbTheme = 0;
-		int[][] mut2_binaire = null, mtt_binaire  = null;
+		int nbUsagers = 0, nbThemes = 0;
+		int[][] mut2 = null, mut2_binaire = null, mtt_binaire  = null;
 		double[][] mtt = null;
-		
+
 		try{
 			Scanner sc = new Scanner(new File(file));
 
-//			names = new PrintWriter("Names.txt");
-//			themes = new PrintWriter("Themes.txt");
+			//			names = new PrintWriter("Names.txt");
+			//			themes = new PrintWriter("Themes.txt");
 
-			res = new PrintWriter("Mut2.txt");
+			Mut2 = new PrintWriter("Mut2.txt");
 
 			String line = "", name = "", theme = "";
 			String[] values = null;
@@ -92,10 +92,10 @@ public class Ex1 {
 				values = line.split(";");
 				name = values[1];
 				theme = values[2];
-				
+
 				if(!listName.contains(name)){
 					listName.add(name);
-//					names.println(name);
+					//					names.println(name);
 					r = e.createRelation(name);
 					nbUsagers++;
 					lp.add(r);
@@ -111,16 +111,17 @@ public class Ex1 {
 
 				if(!listTheme.contains(theme)){
 					listTheme.add(theme);
-//					themes.println(theme);
-					nbTheme++;
+					//					themes.println(theme);
+					nbThemes++;
 				}
 				r.setKey(theme);
 			}
 
 			//Matrice binaire
 			Mut2_binaire = new PrintWriter("Mut2_binaire.txt");
-			mut2_binaire = new int[nbTheme][nbUsagers];
-			System.out.println(nbTheme + "/" + nbUsagers);
+			mut2_binaire = new int[nbThemes][nbUsagers];
+
+			mut2 = new int[nbUsagers][nbThemes];
 
 			int i = 0, j = 0;
 			it = lp.iterator();
@@ -134,57 +135,33 @@ public class Ex1 {
 				while(itt.hasNext()){
 					theme = itt.next();
 					print += " " + r.getValue(theme) + " ";
-					//On rempli la matrice binaire
-					if(i>=9)
-					System.out.println("i" + i);
-					if(j>=9)
-					System.out.println("j" +j);
+					mut2[i][j] = r.getValue(theme);
+					//On remplit la matrice binaire
 					mut2_binaire[j++][i] = r.getValue(theme) == 0 ? 0 : 1;
 				}
-				res.println(print);
+				Mut2.println(print);
 				print = "";
 				i++;
 			}
 
-			
-			 
-			 
-			 
-			 
-			 
-			￼ 
-			1,17 Go (7 %) utilisés sur 15 Go
-			Gérer
-			Conditions d'utilisation - Confidentialité
-			Dernière activité sur le compte : Il y a 29 minutes
-			Détails
-			Contacts (3)
-			imane khemici
-			Ajouter aux cercles
-			￼￼
-			Afficher les détails
-			￼
-			￼￼
-			Police ‪(Ctrl-Maj-5, Ctrl-Maj-6)‬
 			for(i=0;i<nbUsagers;i++){
-				for(j=0;j<nbTheme;j++){
+				for(j=0;j<nbThemes;j++){
 					Mut2_binaire.print(" " + mut2_binaire[j][i]+ " ");
 				}
 				Mut2_binaire.println();
 			}
 			//Fini Mut2_binaire
-//			Mut2_binaire.close();
 
-			
+
 			//PArcours de la matrice binaire afin de remplir la matrice mtt
 			Mtt_binaire = new PrintWriter("Mtt_binaire.txt");
-			mtt_binaire = new int[nbTheme][nbTheme];
-			
+			mtt_binaire = new int[nbThemes][nbThemes];
+
 			//Matrice des distances des thèmes
 			Mtt = new PrintWriter("Mtt.txt");
-			mtt = new double[nbTheme][nbTheme];
-			for(i=0;i<nbTheme;i++){
-				for(j=i;j<nbTheme;j++){
+			mtt = new double[nbThemes][nbThemes];
+			for(i=0;i<nbThemes;i++){
+				for(j=i;j<nbThemes;j++){
 					if(i == j){
 						mtt[i][i] = 1;
 						mtt_binaire[i][i] = 1;
@@ -192,32 +169,69 @@ public class Ex1 {
 					else{
 						double aux = e.getDistanceJacquard(mut2_binaire[i], mut2_binaire[j]);
 						mtt[i][j] = aux;
-						mtt_binaire[i][j] = mtt[i][j] < 0.5 ? 1 : 0; 
+						mtt_binaire[i][j] = mtt[i][j] < 0.5 ? 1 : 0;
 					}
 				}
 			}
+
+			boolean[] themesRecommandes = new boolean[nbThemes];
+			for(i=0;i<nbThemes;i++)
+				themesRecommandes[i] = false;
 			
-			for(i=0;i<nbTheme;i++){
-				for(j=0;j<nbTheme;j++){
-					Mtt.print(" " + mtt[i][j] + " ");
-					Mtt_binaire.print(" " + mtt_binaire[i][j] + " ");
+			
+			for(i=0;i<nbThemes;i++){
+				for(j=0;j<nbThemes;j++){
+					if(j>i){
+						Mtt.print(" " + mtt[i][j] + " ");
+						Mtt_binaire.print(" " + mtt_binaire[i][j] + " ");						
+					}
+					else {
+						Mtt.print("  X  ");
+						Mtt_binaire.print(" X ");
+					}
+					if(mtt_binaire[i][j] == 1 && i != j){
+						if(!themesRecommandes[i])
+							themesRecommandes[i] =  true;
+						if(!themesRecommandes[j])
+							themesRecommandes[j] = true;
+					}
 				}
 				Mtt.println();
 				Mtt_binaire.println();
 			}
+			
+			MutR = new PrintWriter("MutR.txt");
 
-			res.close();
-			Mtt.close();
-			Mtt_binaire.close();
-			Mut2_binaire.close();
+			Readme = new PrintWriter("README.txt");
+			
+			Readme.print("ANALYSE DES RECOMMANDATIONS:\n\n"
+					+ "Gr�ce aux matrices MutR et Mut2, nous pouvons recommander:\n\n");
+			
+			for(i=0;i<nbUsagers;i++){
+				for(j=0;j<nbThemes;j++){
+					if(mut2[i][j] > 0 && themesRecommandes[j]){
+						MutR.print(" 1 ");
+						Readme.println("- le th�me " + listTheme.get(j) +" � " + lp.get(i).getName() + ";\n");
+					}
+					else MutR.print(" 0 ");
+				}
+				MutR.println();
+			}
+
+
 			
 		}catch(Exception exp){
 			exp.printStackTrace();
 		}
 		finally{
-//			themes.close();
-//			names.close();
-			
+			//			themes.close();
+			//			names.close();
+			Readme.close();
+			Mut2.close();
+			Mtt.close();
+			Mtt_binaire.close();
+			Mut2_binaire.close();
+			MutR.close();
 		}
 	}
 
